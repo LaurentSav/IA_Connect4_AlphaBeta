@@ -3,7 +3,7 @@ package Noeud;
 import Environment.Case;
 
 public class Heuristic {
-
+    /*
     public int EvaluationLignePossible(boolean typeJoueur, Case[][] grille) {
         int eval = 0;
         String symbolJoueur;
@@ -19,22 +19,22 @@ public class Heuristic {
                     //Les 4 premiers cas sont les nouveaux cas dû au Puissance 4
                     if(j-3>=0){ // dans le cas [symbol][symbol][symbol][vide]
                         if (grille[i][j - 3].getSymbole().equals(symbolJoueur) && grille[i][j - 2].getSymbole().equals(symbolJoueur) && grille[i][j - 1].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if(j+3<colonne){ // dans le cas [vide][symbol][symbol][symbol]
                         if (grille[i][j + 1].getSymbole().equals(symbolJoueur) && grille[i][j + 2].getSymbole().equals(symbolJoueur) && grille[i][j + 3].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((j-1>=0) && (j+2<colonne)){ // dans le cas [symbol][vide][symbol][symbol]
                         if (grille[i][j - 1].getSymbole().equals(symbolJoueur) && grille[i][j + 1].getSymbole().equals(symbolJoueur) && grille[i][j + 2].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((j-2>=0) && (j+1<colonne)){ // dans le cas [symbol][symbol][vide][symbol]
                         if (grille[i][j - 2].getSymbole().equals(symbolJoueur) && grille[i][j - 1].getSymbole().equals(symbolJoueur) && grille[i][j + 1].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     // dans le cas [symbol][symbol][vide]
@@ -83,22 +83,22 @@ public class Heuristic {
                     // les 4 premiers cas sont les nouveaux cas du au Puissance 4
                     if(i-3>=0){ // dans le cas [symbol][symbol][symbol][vide] vertical
                         if (grille[i - 3][j].getSymbole().equals(symbolJoueur) && grille[i - 2][j].getSymbole().equals(symbolJoueur) && grille[i - 1][j].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if(i+3<ligne){ // dans le cas [vide][symbol][symbol][symbol] vertical
                         if (grille[i + 1][j].getSymbole().equals(symbolJoueur) && grille[i + 2][j].getSymbole().equals(symbolJoueur) && grille[i + 3][j].getSymbole().equals(symbolJoueur) ){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i-1>=0) && (i+2<ligne)){ // dans le cas [symbol][vide][symbol][symbol] vertical
                         if (grille[i - 1][j].getSymbole().equals(symbolJoueur)  && grille[i + 1][j].getSymbole().equals(symbolJoueur) && grille[i + 2][j].getSymbole().equals(symbolJoueur) ){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i-2>=0) && (i+1<ligne)){ // dans le cas [symbol][symbol][vide][symbol] vertical
                         if (grille[i - 2][j].getSymbole().equals(symbolJoueur) && grille[i - 1][j].getSymbole().equals(symbolJoueur) && grille[i + 1][j].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     // dans le cas [symbol][symbol][vide] vertical
@@ -140,22 +140,22 @@ public class Heuristic {
                     // les 4 premiers cas sont les nouveaux cas du au Puissance 4
                     if((i-3>=0) && (j-3>=0)){ // dans le cas [symbol][symbol][symbol][vide] diagonale droite
                         if (grille[i-3][j-3].getSymbole().equals(symbolJoueur) && grille[i-2][j-2].getSymbole().equals(symbolJoueur) && grille[i-1][j-1].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i-3>=0) && (j+3<colonne)){ // dans le cas [vide][symbol][symbol][symbol] diagonale droite
                         if (grille[i-1][j+1].getSymbole().equals(symbolJoueur) && grille[i-2][j+2].getSymbole().equals(symbolJoueur) && grille[i-3][j+3].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i+1<ligne) && (i-2>=0) && (j-1>=0) && (j+2)<colonne){ // dans le cas [symbol][vide][symbol][symbol] diagonale droite
                         if (grille[i+1][j-1].getSymbole().equals(symbolJoueur) && grille[i-1][j+1].getSymbole().equals(symbolJoueur) && grille[i-2][j+2].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i+2<ligne) && (i-1>=0) && (j-2>=0) && (j+1<colonne)){ // dans le cas [symbol][symbol][vide][symbol] diagonale droite
                         if (grille[i+2][j-2].getSymbole().equals(symbolJoueur) && grille[i+1][j-1].getSymbole().equals(symbolJoueur) && grille[i-1][j+1].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     // dans le cas [symbol][symbol][vide] diagonale droite
@@ -202,22 +202,22 @@ public class Heuristic {
                     // les 4 premiers cas sont les nouveaux cas du au Puissance 4
                     if((i+3<ligne) && (j-3>=0)){ // dans le cas [symbol][symbol][symbol][vide] diagonale gauche
                         if (grille[i+3][j-3].getSymbole().equals(symbolJoueur) && grille[i+2][j-2].getSymbole().equals(symbolJoueur) && grille[i+1][j-1].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i+3<ligne) && (j+3<colonne)){ // dans le cas [vide][symbol][symbol][symbol] diagonale gauche
                         if (grille[i+1][j+1].getSymbole().equals(symbolJoueur) && grille[i+2][j+2].getSymbole().equals(symbolJoueur) && grille[i+3][j+3].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i-1>=0) && (i+2<ligne) && (j-1>=0) && (j+2)<colonne){ // dans le cas [symbol][vide][symbol][symbol] diagonale gauche
                         if (grille[i-1][j-1].getSymbole().equals(symbolJoueur) && grille[i+1][j+1].getSymbole().equals(symbolJoueur) && grille[i+2][j+2].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     if((i-2>=0) && (i+1<ligne) && (j-2>=0) && (j+1<colonne)){ // dans le cas [symbol][symbol][vide][symbol] diagonale gauche
                         if (grille[i-2][j-2].getSymbole().equals(symbolJoueur) && grille[i-1][j-1].getSymbole().equals(symbolJoueur) && grille[i+1][j+1].getSymbole().equals(symbolJoueur)){
-                            eval+=600;
+                            eval+=1000;
                         }
                     }
                     // dans le cas [symbol][symbol][vide] diagonale gauche
@@ -250,10 +250,10 @@ public class Heuristic {
             }
         }
         return eval;
-    }
+    }*/
 
-    public boolean EvaluationLigneFull(int i, int j, int player, Case[][] grille){
-        int nbaligner = 1;
+    public int EvaluationLigneFull(int i, int j, int player, Case[][] grille){
+        int nbaligner = 0;
         String numPlayer = String.valueOf(player);
 
         //Ligne Gauche
@@ -278,11 +278,11 @@ public class Heuristic {
             }
         }
         nbaligner = nbaligner - 2;
-        return nbaligner >= 4;
+        return nbaligner;
     }
 
-    public boolean EvaluationColumnFull(int i, int j, int player, Case[][] grille){
-        int nbaligner = 1;
+    public int EvaluationColumnFull(int i, int j, int player, Case[][] grille){
+        int nbaligner = 0;
         String numPlayer = String.valueOf(player);
         //Colonne Haut
         for (int k = i; k >= 0; k--) {
@@ -306,11 +306,11 @@ public class Heuristic {
             }
         }
         nbaligner = nbaligner - 2;
-        return nbaligner >= 4;
+        return nbaligner;
     }
 
-    public boolean EvaluationDiagonaleGaucheFull(int i, int j, int player, Case[][] grille){
-        int nbaligner = 1;
+    public int EvaluationDiagonaleGaucheFull(int i, int j, int player, Case[][] grille){
+        int nbaligner = 0;
         String numPlayer = String.valueOf(player);
         //Diagonale Haut-Gauche
         int k = i;
@@ -341,12 +341,12 @@ public class Heuristic {
                 }
             }
         }
-
-        return nbaligner >= 4;
+        nbaligner = nbaligner - 2;
+        return nbaligner;
     }
 
-    public boolean EvaluationDiagonaleDroiteFull(int i, int j, int player, Case[][] grille){
-        int nbaligner = 1;
+    public int EvaluationDiagonaleDroiteFull(int i, int j, int player, Case[][] grille){
+        int nbaligner = 0;
         String numPlayer = String.valueOf(player);
         //Diagonale Haut-Droite
         int k = i;
@@ -377,47 +377,47 @@ public class Heuristic {
                 }
             }
         }
+        nbaligner = nbaligner - 2;
+        return nbaligner;
+    }
 
-        return nbaligner >= 4;
+    public int EvaluationCalculate(int nbPion){
+
+        if(nbPion == 1){
+            return 10;
+        }else if(nbPion == 2){
+            return 100;
+        }else if(nbPion == 3){
+            return 1000;
+        }else if(nbPion >= 4){
+            return 10000;
+        }
+        return 0;
     }
 
     public int EvaluationFull(boolean typeJoueur, Case[][] grille){
 
         int joueur = 1;
-        if(typeJoueur){
-            joueur = 1;
-        }else{
+        if(!typeJoueur){
             joueur = 2;
         }
 
+        int somme = 0;
+
         for (int i = 0; i < grille.length; i++) {
             for (int j = 0; j < grille[0].length; j++) {
-                if(EvaluationLigneFull(i,j,joueur, grille)){
-                    return 1000;
-                }
-                if(EvaluationColumnFull(i,j,joueur, grille)){
-                    return 1000;
-                }
-                if(EvaluationDiagonaleDroiteFull(i,j,joueur,grille)){
-                    return 1000;
-                }
-                if(EvaluationDiagonaleGaucheFull(i,j,joueur,grille)){
-                    return 1000;
-                }
+                somme += EvaluationCalculate(EvaluationColumnFull(i,j,joueur,grille));
+                somme += EvaluationCalculate(EvaluationLigneFull(i,j,joueur,grille));
+                somme += EvaluationCalculate(EvaluationDiagonaleDroiteFull(i,j,joueur,grille));
+                somme += EvaluationCalculate(EvaluationDiagonaleGaucheFull(i,j,joueur,grille));
             }
         }
-        return 0;
+        return somme;
     }
 
     public int Evaluation(Case[][] grille){
 
-        int h = -2 * EvaluationLignePossible(false, grille) + EvaluationLignePossible(true, grille)
-                -2 * EvaluationColonnePossible(false, grille) + EvaluationColonnePossible(true, grille)
-                -2 * EvaluationDiagonaleDroitePossible(false, grille) + EvaluationDiagonaleDroitePossible(true, grille)
-                -2 * EvaluationdiagonaleGauchePossible(false, grille) + EvaluationdiagonaleGauchePossible(true, grille)
-                -2 * EvaluationFull(false, grille) + EvaluationFull(true, grille);
-
-        return h;
+        return - EvaluationFull(false, grille) + EvaluationFull(true, grille);
 
     }
 

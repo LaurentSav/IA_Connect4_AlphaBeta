@@ -32,7 +32,6 @@ public class Agent {
         Noeud n = new Noeud(true, beliefs);
         AlphaBeta ab = new AlphaBeta();
         Coup c = ab.AlphaBeta(n, Integer.MIN_VALUE, Integer.MAX_VALUE, this.profondeur);
-
         //Execution du coup de l'IA
         System.out.println(c.getEval());
         effecteur.doIt(c.getColonne(), env);

@@ -8,25 +8,21 @@ import java.awt.*;
 public class AlphaBeta {
 
     public Coup AlphaBeta(Noeud n, int alpha, int beta, int profondeur){
-        int bestj = 0;
-        //je crée des alpha/beta local car d'après l'algorithme alpha_beta, théoriquement alpha vaut toujours -infini et beta vaut
-        // toujours + infini en début d'analyse.
-        int alphalcl = alpha; //alpha local
-        int betalcl = beta; //beta local
 
         int width = n.getGrille()[0].length;
-        int height = n.getGrille().length;
+        Case[][] copie = initialisationGrille();
 
-        if ((profondeur == 1) || (estFinJeu(n.isMax(), n.getGrille()))){
+        if ((profondeur == 0) || (estFinJeu(n.isMax(), n.getGrille()))){
             n.evaluer();
             return new Coup(n.getH(), -1);
         }
 
         if (n.isMax()) {
-            for (int j = 0; j < n.getGrille().length; j++) {
-                Case[][] copie = initialisationGrille();
+            int bestj = 0;
+            int alphalcl = alpha; //alpha local
+            for (int j = 0; j < width; j++) {
                 copieMatrice(n.getGrille(), copie);
-                if (jouer(!n.isMax(), j, copie)) {
+                if (jouer(n.isMax(), j, copie)) {
                     Noeud successeur = new Noeud(!n.isMax(), copie);
                     Coup c2 = AlphaBeta(successeur, alpha, beta, profondeur - 1);
                     successeur.setH(c2.getEval());
@@ -43,20 +39,23 @@ public class AlphaBeta {
             }
             return new Coup(alphalcl,bestj);
         } else {
+            int bestj = 0;
+            int betalcl = beta; //beta local
             for (int k = 0; k < width; k++) {
-                Case[][] copie = initialisationGrille();
+
                 copieMatrice(n.getGrille(), copie);
-                if (jouer(n.isMax(), k, copie)){
-                    Noeud n3 = new Noeud(!n.isMax(), copie);
-                    Coup c5 = AlphaBeta(n3, alpha, beta, profondeur - 1);
-                    n3.setH(c5.getEval());
+
+                if (jouer(!n.isMax(), k, copie)){
+                    Noeud successeur = new Noeud(n.isMax(), copie);
+                    Coup c5 = AlphaBeta(successeur, alpha, beta, profondeur - 1);
+                    successeur.setH(c5.getEval());
 
                     //Dans un noeud min, nous cherchons toujours à avoir le beta le plus petit
-                    if (c5.getEval() < betalcl){
+                    if (successeur.getH() < betalcl){
                         betalcl = c5.getEval();
                         bestj = k;
                     }
-                    if (betalcl <= alphalcl) {
+                    if (betalcl <= alpha) {
                         Coup c6 = new Coup(betalcl, bestj);
                         return c6;
                     }
