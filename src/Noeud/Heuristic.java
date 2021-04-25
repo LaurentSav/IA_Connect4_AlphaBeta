@@ -417,7 +417,7 @@ public class Heuristic {
 
     public int Evaluation(Case[][] grille){
 
-        return - EvaluationFull(false, grille) + EvaluationFull(true, grille);
+        return  EvaluationFull(true, grille) - EvaluationFull(false, grille);
 
     }
 
