@@ -6,6 +6,10 @@ public class Heuristic {
 
     public static int methode = 1;
 
+
+    /*
+    * Attribution d'un score en fonction du nombre de pion
+     */
     public int EvaluationCalculate(int nbPion){
 
         if(nbPion == 1){
@@ -20,6 +24,13 @@ public class Heuristic {
         return 0;
     }
 
+    /*
+     * Fonctions d'évaluation pour la méthode 2
+     *
+     */
+
+    // Evaluation de la ligne en fonction des cas (voir rapport)
+    // On calcule le score d'une case en fonction de quatre cas et en fonction du nombre de pions
     public int EvaluationLigne(boolean typeJoueur, Case[][] grille, int ligne, int col){
 
         int score = 0;
@@ -143,6 +154,8 @@ public class Heuristic {
         return nbPions;
     }
 
+    // Evaluation de la colonne en fonction des cas (voir rapport)
+    // On calcule le score d'une case en fonction de quatre cas et en fonction du nombre de pions
     public int EvaluationColonne(boolean typeJoueur, Case[][] grille, int ligne, int col){
 
         int score = 0;
@@ -266,6 +279,8 @@ public class Heuristic {
         return nbPions;
     }
 
+    // Evaluation de la diagonale droite en fonction des cas (voir rapport)
+    // On calcule le score d'une case en fonction de quatre cas et en fonction du nombre de pions
     public int EvaluationDiagonaleDroite(boolean typeJoueur, Case[][] grille, int ligne, int col){
 
         int score = 0;
@@ -389,6 +404,8 @@ public class Heuristic {
         return nbPions;
     }
 
+    // Evaluation de la diagonale gauche en fonction des cas (voir rapport)
+    // On calcule le score d'une case en fonction de quatre cas et en fonction du nombre de pions
     public int EvaluationDiagonaleGauche(boolean typeJoueur, Case[][] grille, int ligne, int col){
 
         int score = 0;
@@ -513,6 +530,12 @@ public class Heuristic {
     }
 
 
+
+    /*
+    * Fonctions d'évaluation pour la méthode 1
+     */
+
+    /* Evaluation de la ligne, retourne le nombre de pion d'un joueur sur une ligne en fonction de la case i,j */
     public int EvaluationLigneFull(int i, int j, int player, Case[][] grille){
         int nbaligner = 0;
         String numPlayer = String.valueOf(player);
@@ -542,6 +565,7 @@ public class Heuristic {
         return nbaligner;
     }
 
+    /* Evaluation de la colonne, retourne le nombre de pion d'un joueur sur une ligne en fonction de la case i,j */
     public int EvaluationColumnFull(int i, int j, int player, Case[][] grille){
         int nbaligner = 0;
         String numPlayer = String.valueOf(player);
@@ -570,6 +594,7 @@ public class Heuristic {
         return nbaligner;
     }
 
+    /* Evaluation de la diagonal gauche, retourne le nombre de pion d'un joueur sur une ligne en fonction de la case i,j */
     public int EvaluationDiagonaleGaucheFull(int i, int j, int player, Case[][] grille){
         int nbaligner = 0;
         String numPlayer = String.valueOf(player);
@@ -606,6 +631,7 @@ public class Heuristic {
         return nbaligner;
     }
 
+    /* Evaluation de la diagonal droite, retourne le nombre de pion d'un joueur sur une ligne en fonction de la case i,j */
     public int EvaluationDiagonaleDroiteFull(int i, int j, int player, Case[][] grille){
         int nbaligner = 0;
         String numPlayer = String.valueOf(player);
@@ -643,7 +669,7 @@ public class Heuristic {
     }
 
 
-
+    /* Retourne le score d'un joueur sur une grille */
     public int EvaluationFull(boolean typeJoueur, Case[][] grille){
 
         int joueur = 1;
@@ -655,12 +681,14 @@ public class Heuristic {
 
         for (int i = 0; i < grille.length; i++) {
             for (int j = 0; j < grille[0].length; j++) {
+                // Méthode 1
                 if(methode == 1){
                     somme += EvaluationCalculate(EvaluationColumnFull(i,j,joueur,grille));
                     somme += EvaluationCalculate(EvaluationLigneFull(i,j,joueur,grille));
                     somme += EvaluationCalculate(EvaluationDiagonaleDroiteFull(i,j,joueur,grille));
                     somme += EvaluationCalculate(EvaluationDiagonaleGaucheFull(i,j,joueur,grille));
-                }else{
+
+                }else{ // Méthode 2
                     somme += EvaluationLigne(typeJoueur, grille, i , j);
                     somme += EvaluationColonne(typeJoueur, grille, i , j);
                     somme += EvaluationDiagonaleDroite(typeJoueur, grille, i , j);
@@ -683,6 +711,7 @@ public class Heuristic {
         return somme;
     }
 
+    /* Retourne l'évaluation de la grille */
     public int Evaluation(Case[][] grille){
 
         return EvaluationFull(true, grille) - EvaluationFull(false, grille);

@@ -37,6 +37,9 @@ public class Noeud {
         this.h = h;
     }
 
+    /*
+     * Evaluation de la grille
+     */
     public void evaluer(){
         Heuristic heuristic = new Heuristic();
         this.h = heuristic.Evaluation(this.grille);

@@ -19,54 +19,46 @@ public class AlphaBeta {
             return new Coup(n.getH(), -1);
         }
 
-        // Si Noeud Max
-        if (n.isMax()) {
+        if (n.isMax()) { // Si Noeud Max
             int bestj = 0; // Meilleur Colonne
             int alphalcl = alpha; //alpha local
             for (int j = 0; j < width; j++) {
                 copieMatrice(n.getGrille(), copie);  // Copie de la grille
                 if (jouer(n.isMax(), j, copie)) {    // On place un pion dans une des colonnes
                     Noeud successeur = new Noeud(!n.isMax(), copie);   // Noeud enfant MIN et qui prend en parametre la copie avec le pion posé dans une des colonnes de la grille
-                    Coup c2 = AlphaBeta(successeur, alphalcl, beta, profondeur - 1);     // Exécution d'alphabeta
-                    successeur.setH(c2.getEval());
+                    Coup c2 = AlphaBeta(successeur, alphalcl, beta, profondeur - 1);     // Récursion d'alpha beta avec le noeud enfant et l'alpha local (on remonte dans l'arbre)
+                    successeur.setH(c2.getEval());  // Attribution du score de la grille du noeud enfant.
 
-                    if (successeur.getH() > alphalcl) {
-                        alphalcl = successeur.getH();
-                        bestj = j;
+                    if (successeur.getH() > alphalcl) {    // Si la valeur du noeud enfant est supérieur à l'alpha local (supérieur à la borne inférieur)
+                        alphalcl = successeur.getH();     // Mise à jour de l'alpha local
+                        bestj = j;                        // Mise à jour de la meilleur colonne
                     }
-                    if (alphalcl >= beta) {
+
+                    if (alphalcl >= beta) {                // Si l'alpha local est supérieur à beta (contradiction) alors élagage
                         Coup c3 = new Coup(alphalcl, bestj);
-                        return c3;
-                    }
-                    if(alphalcl > alpha){
-                        alpha = alphalcl;
+                        return c3;                        // On retourne le coup et on élage les autres noeuds enfants
                     }
                 }
             }
             return new Coup(alphalcl,bestj);
-        } else {
-            int bestj = 0;
+        } else {    // Si noeud MIN
+            int bestj = 0;     // Meilleur Colonne
             int betalcl = beta; //beta local
             for (int k = 0; k < width; k++) {
-
-                copieMatrice(n.getGrille(), copie);
-
+                copieMatrice(n.getGrille(), copie); // Copie de la grille
                 if (jouer(!n.isMax(), k, copie)){
-                    Noeud successeur = new Noeud(n.isMax(), copie);
-                    Coup c5 = AlphaBeta(successeur, alpha, beta, profondeur - 1);
+                    Noeud successeur = new Noeud(n.isMax(), copie); // Noeud enfant MAX et qui prend en parametre la copie avec le pion posé dans une des colonnes de la grille
+                    Coup c5 = AlphaBeta(successeur, alpha, beta, profondeur - 1);  // Récursion d'alpha beta avec le noeud enfant et l'alpha local (on remonte dans l'arbre)
                     successeur.setH(c5.getEval());
 
-                    //Dans un noeud min, nous cherchons toujours à avoir le beta le plus petit
+                    //Dans un noeud min, nous cherchons toujours à minimiser beta (la borne supérieur)
                     if (successeur.getH() < betalcl){
-                        betalcl = successeur.getH();
-                        bestj = k;
+                        betalcl = successeur.getH();    // Mise à jour de l'alpha local
+                        bestj = k;                      // Mise à jour de la meilleur colonne
                     }
-                    if (betalcl <= alpha) {
+                    if (betalcl <= alpha) {             // Si beta local est supérieur à alpha (contradiction) alors élagage
                         Coup c6 = new Coup(betalcl, bestj);
-                        return c6;
-                    }
-                    if(betalcl > beta){
-                        beta = betalcl;
+                        return c6;                      // On retourne le coup et on élage les autres noeuds enfants
                     }
                 }
             }
@@ -74,6 +66,9 @@ public class AlphaBeta {
         }
     }
 
+    /*
+    * Retourne la copie de la grille
+     */
     public void copieMatrice(Case[][] grille, Case[][] grillecopie){
         for (int i = 0; i < grille.length; i++) {
             for (int j = 0; j < grille[0].length; j++) {
@@ -83,6 +78,9 @@ public class AlphaBeta {
         }
     }
 
+    /*
+    * Permet de simuler un coup dans l'algorithme alpha beta
+     */
     public boolean jouer(boolean typeJoueur, int colonne, Case[][] grille){
         int symbol;
         if (typeJoueur) {

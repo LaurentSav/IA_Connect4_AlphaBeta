@@ -14,6 +14,7 @@ public class Main {
         int joueur = 1;
         // Agent
         int previousjoueur = 2;
+
         // Methode heuristique 1 ou 2
         Heuristic.methode = 2;
 

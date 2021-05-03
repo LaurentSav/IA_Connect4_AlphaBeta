@@ -7,8 +7,7 @@ import java.awt.*;
 
 public class Capteur {
 
-
-
+    /* Initialisation d'une grille vide */
     public Case[][] initialisationGrille(){
         Case[][] grille = new Case[6][7];
         for (int i = 0; i < grille.length; i++) {
@@ -19,6 +18,7 @@ public class Capteur {
         return grille;
     }
 
+    /* Observatio de l'environnement */
     public Case[][] observerGrille(Environment env, Case[][] grille){
         for (int i = 0; i < env.getGrille().length; i++) {
             for (int j = 0; j < env.getGrille()[0].length; j++) {
