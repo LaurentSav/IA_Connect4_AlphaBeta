@@ -7,9 +7,11 @@ import java.awt.*;
 
 public class AlphaBeta {
 
+    /* Algorithme Alpha Beta */
     public Coup AlphaBeta(Noeud n, int alpha, int beta, int profondeur){
 
         int width = n.getGrille()[0].length;
+        // Initialisation d'une copie vide de la grille
         Case[][] copie = initialisationGrille();
 
         if ((profondeur == 0) || (estFinJeu(n.isMax(), n.getGrille()))){
@@ -17,23 +19,27 @@ public class AlphaBeta {
             return new Coup(n.getH(), -1);
         }
 
+        // Si Noeud Max
         if (n.isMax()) {
-            int bestj = 0;
+            int bestj = 0; // Meilleur Colonne
             int alphalcl = alpha; //alpha local
             for (int j = 0; j < width; j++) {
-                copieMatrice(n.getGrille(), copie);
-                if (jouer(n.isMax(), j, copie)) {
-                    Noeud successeur = new Noeud(!n.isMax(), copie);
-                    Coup c2 = AlphaBeta(successeur, alpha, beta, profondeur - 1);
+                copieMatrice(n.getGrille(), copie);  // Copie de la grille
+                if (jouer(n.isMax(), j, copie)) {    // On place un pion dans une des colonnes
+                    Noeud successeur = new Noeud(!n.isMax(), copie);   // Noeud enfant MIN et qui prend en parametre la copie avec le pion posé dans une des colonnes de la grille
+                    Coup c2 = AlphaBeta(successeur, alphalcl, beta, profondeur - 1);     // Exécution d'alphabeta
                     successeur.setH(c2.getEval());
 
-                    if (c2.getEval() > alphalcl) {
-                        alphalcl = c2.getEval();
+                    if (successeur.getH() > alphalcl) {
+                        alphalcl = successeur.getH();
                         bestj = j;
                     }
                     if (alphalcl >= beta) {
                         Coup c3 = new Coup(alphalcl, bestj);
                         return c3;
+                    }
+                    if(alphalcl > alpha){
+                        alpha = alphalcl;
                     }
                 }
             }
@@ -52,12 +58,15 @@ public class AlphaBeta {
 
                     //Dans un noeud min, nous cherchons toujours à avoir le beta le plus petit
                     if (successeur.getH() < betalcl){
-                        betalcl = c5.getEval();
+                        betalcl = successeur.getH();
                         bestj = k;
                     }
                     if (betalcl <= alpha) {
                         Coup c6 = new Coup(betalcl, bestj);
                         return c6;
+                    }
+                    if(betalcl > beta){
+                        beta = betalcl;
                     }
                 }
             }

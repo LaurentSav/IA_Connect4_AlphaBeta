@@ -3,254 +3,515 @@ package Noeud;
 import Environment.Case;
 
 public class Heuristic {
-    /*
-    public int EvaluationLignePossible(boolean typeJoueur, Case[][] grille) {
-        int eval = 0;
+
+    public static int methode = 1;
+
+    public int EvaluationCalculate(int nbPion){
+
+        if(nbPion == 1){
+            return 10;
+        }else if(nbPion == 2){
+            return 100;
+        }else if(nbPion == 3){
+            return 1000;
+        }else if(nbPion >= 4){
+            return 10000;
+        }
+        return 0;
+    }
+
+    public int EvaluationLigne(boolean typeJoueur, Case[][] grille, int ligne, int col){
+
+        int score = 0;
+        score += EvaluationCalculate(EvaluationLigneCas1(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationLigneCas2(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationLigneCas3(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationLigneCas4(typeJoueur, grille, ligne, col));
+        return score;
+
+    }
+    public int EvaluationLigneCas1(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
         String symbolJoueur;
+        String sJsuivant;
         if(typeJoueur){
             symbolJoueur = "1";
-        }else {symbolJoueur = "2";}
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
 
-        int colonne = grille[0].length;
-
-        for (int i = 0; i < grille.length; i++) {
-            for (int j = 0; j < colonne; j++) {
-                if(grille[i][j].getSymbole().equals(" ")) {
-                    //Les 4 premiers cas sont les nouveaux cas dû au Puissance 4
-                    if(j-3>=0){ // dans le cas [symbol][symbol][symbol][vide]
-                        if (grille[i][j - 3].getSymbole().equals(symbolJoueur) && grille[i][j - 2].getSymbole().equals(symbolJoueur) && grille[i][j - 1].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if(j+3<colonne){ // dans le cas [vide][symbol][symbol][symbol]
-                        if (grille[i][j + 1].getSymbole().equals(symbolJoueur) && grille[i][j + 2].getSymbole().equals(symbolJoueur) && grille[i][j + 3].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((j-1>=0) && (j+2<colonne)){ // dans le cas [symbol][vide][symbol][symbol]
-                        if (grille[i][j - 1].getSymbole().equals(symbolJoueur) && grille[i][j + 1].getSymbole().equals(symbolJoueur) && grille[i][j + 2].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((j-2>=0) && (j+1<colonne)){ // dans le cas [symbol][symbol][vide][symbol]
-                        if (grille[i][j - 2].getSymbole().equals(symbolJoueur) && grille[i][j - 1].getSymbole().equals(symbolJoueur) && grille[i][j + 1].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    // dans le cas [symbol][symbol][vide]
-                    if(j-2>=0){
-                        if (grille[i][j - 2].getSymbole().equals(symbolJoueur) && grille[i][j - 1].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [vide][symbol][symbol]
-                    if(j+2<colonne){
-                        if (grille[i][j + 1].getSymbole().equals(symbolJoueur) && grille[i][j + 2].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide][symbol]
-                    if(j-1>=0 && j+1<colonne){
-                        if (grille[i][j - 1].getSymbole().equals(symbolJoueur) && grille[i][j + 1].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide]
-                    if(j-1>=0){
-                        if (grille[i][j - 1].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }// dans le cas [vide][symbol]
-                    if(j+1<colonne){
-                        if (grille[i][j + 1].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }
+        //Cas position 1
+        for (int i = 0; i < 4; i++) {
+            if(col + i < 7){
+                if(grille[ligne][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
                 }
+                if(grille[ligne][col + i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
             }
         }
-        return eval;
+        return nbPions;
     }
-    public int EvaluationColonnePossible(boolean typeJoueur, Case[][] grille){
-        int eval = 0;
+    public int EvaluationLigneCas2(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
         String symbolJoueur;
+        String sJsuivant;
         if(typeJoueur){
-             symbolJoueur = "1";
-        }else { symbolJoueur = "2";}
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
 
-        int ligne = grille.length;
+        //Cas position 2
+        for (int i = -1; i < 3; i++) {
+            if(col + i < 7 && col + i >= 0){
+                if(grille[ligne][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne][col + i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationLigneCas3(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
 
-        for (int i = ligne-1; i >=0; i--) {
-            for (int j = 0; j < grille[0].length; j++) {
-                if(grille[i][j].getSymbole().equals(" ")) {
-                    // les 4 premiers cas sont les nouveaux cas du au Puissance 4
-                    if(i-3>=0){ // dans le cas [symbol][symbol][symbol][vide] vertical
-                        if (grille[i - 3][j].getSymbole().equals(symbolJoueur) && grille[i - 2][j].getSymbole().equals(symbolJoueur) && grille[i - 1][j].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if(i+3<ligne){ // dans le cas [vide][symbol][symbol][symbol] vertical
-                        if (grille[i + 1][j].getSymbole().equals(symbolJoueur) && grille[i + 2][j].getSymbole().equals(symbolJoueur) && grille[i + 3][j].getSymbole().equals(symbolJoueur) ){
-                            eval+=1000;
-                        }
-                    }
-                    if((i-1>=0) && (i+2<ligne)){ // dans le cas [symbol][vide][symbol][symbol] vertical
-                        if (grille[i - 1][j].getSymbole().equals(symbolJoueur)  && grille[i + 1][j].getSymbole().equals(symbolJoueur) && grille[i + 2][j].getSymbole().equals(symbolJoueur) ){
-                            eval+=1000;
-                        }
-                    }
-                    if((i-2>=0) && (i+1<ligne)){ // dans le cas [symbol][symbol][vide][symbol] vertical
-                        if (grille[i - 2][j].getSymbole().equals(symbolJoueur) && grille[i - 1][j].getSymbole().equals(symbolJoueur) && grille[i + 1][j].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    // dans le cas [symbol][symbol][vide] vertical
-                    if(i-2>=0){
-                        if (grille[i - 2][j].getSymbole().equals(symbolJoueur) && grille[i - 1][j].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [vide][symbol][symbol] vertical
-                    if(i+2<ligne){
-                        if (grille[i + 1][j].getSymbole().equals(symbolJoueur) && grille[i + 2][j].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide][symbol] vertical
-                    if(i-1>=0 && i+1<ligne){
-                        if (grille[i - 1][j].getSymbole().equals(symbolJoueur) && grille[i + 1][j].getSymbole().equals(symbolJoueur) ) {
-                            eval += 200;
-                        }
-                    }// dans le cas [vide][symbol] vertical
-                    if(i+1<ligne){
-                        if (grille[i + 1][j].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }
+        //Cas position 2
+        for (int i = -2; i < 2; i++) {
+            if(col + i < 7 && col + i >= 0){
+                if(grille[ligne][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
                 }
+                if(grille[ligne][col + i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
             }
         }
-        return eval;
+        return nbPions;
     }
-    public int EvaluationDiagonaleDroitePossible(boolean typeJoueur, Case[][] grille){
-        int eval = 0;
+    public int EvaluationLigneCas4(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
         String symbolJoueur;
-        if(typeJoueur){ symbolJoueur = "1";
-        }else {symbolJoueur = "2";}
-        int ligne = grille.length;
-        int colonne = grille[0].length;
-        for (int i = ligne-1; i >=0; i--) {
-            for (int j = 0; j < colonne; j++) {
-                if(grille[i][j].getSymbole().equals(" ")) {
-                    // les 4 premiers cas sont les nouveaux cas du au Puissance 4
-                    if((i-3>=0) && (j-3>=0)){ // dans le cas [symbol][symbol][symbol][vide] diagonale droite
-                        if (grille[i-3][j-3].getSymbole().equals(symbolJoueur) && grille[i-2][j-2].getSymbole().equals(symbolJoueur) && grille[i-1][j-1].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((i-3>=0) && (j+3<colonne)){ // dans le cas [vide][symbol][symbol][symbol] diagonale droite
-                        if (grille[i-1][j+1].getSymbole().equals(symbolJoueur) && grille[i-2][j+2].getSymbole().equals(symbolJoueur) && grille[i-3][j+3].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((i+1<ligne) && (i-2>=0) && (j-1>=0) && (j+2)<colonne){ // dans le cas [symbol][vide][symbol][symbol] diagonale droite
-                        if (grille[i+1][j-1].getSymbole().equals(symbolJoueur) && grille[i-1][j+1].getSymbole().equals(symbolJoueur) && grille[i-2][j+2].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((i+2<ligne) && (i-1>=0) && (j-2>=0) && (j+1<colonne)){ // dans le cas [symbol][symbol][vide][symbol] diagonale droite
-                        if (grille[i+2][j-2].getSymbole().equals(symbolJoueur) && grille[i+1][j-1].getSymbole().equals(symbolJoueur) && grille[i-1][j+1].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    // dans le cas [symbol][symbol][vide] diagonale droite
-                    if((i+2<ligne) && (j-2>=0)){
-                        if (grille[i+2][j-2].getSymbole().equals(symbolJoueur) && grille[i+1][j-1].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [vide][symbol][symbol] diagonale droite
-                    if((i-2>=0) && (j+2<colonne)){
-                        if (grille[i-1][j+1].getSymbole().equals(symbolJoueur) && grille[i-2][j+2].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide][symbol] diagonale droite
-                    if(i-1>=0 && i+1<ligne && j-1>=0 && j+1<colonne){
-                        if (grille[i+1][j-1].getSymbole().equals(symbolJoueur) && grille[i-1][j+1].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide] diagonale droite
-                    if(i+1<ligne && j-1>=0){
-                        if (grille[i+1][j-1].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }// dans le cas [vide][symbol] diagonale droite
-                    if(i-1>=0 && j+1<colonne){
-                        if (grille[i-1][j+1].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -3; i < 1; i++) {
+            if(col + i < 7 && col + i >= 0){
+                if(grille[ligne][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
                 }
+                if(grille[ligne][col + i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
             }
         }
-        return eval;
+        return nbPions;
     }
-    public int EvaluationdiagonaleGauchePossible(boolean typeJoueur, Case[][] grille){
-        int eval = 0;
+
+    public int EvaluationColonne(boolean typeJoueur, Case[][] grille, int ligne, int col){
+
+        int score = 0;
+        score += EvaluationCalculate(EvaluationColonneCas1(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationColonneCas2(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationColonneCas3(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationColonneCas4(typeJoueur, grille, ligne, col));
+        return score;
+
+    }
+    public int EvaluationColonneCas1(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
         String symbolJoueur;
-        if(typeJoueur){ symbolJoueur = "1";
-        }else {symbolJoueur = "2";}
-        int ligne = grille.length;
-        int colonne = grille[0].length;
-        for (int i = ligne-1; i >=0; i--) {
-            for (int j = 0; j < colonne; j++) {
-                if(grille[i][j].getSymbole().equals(" ")) {
-                    // les 4 premiers cas sont les nouveaux cas du au Puissance 4
-                    if((i+3<ligne) && (j-3>=0)){ // dans le cas [symbol][symbol][symbol][vide] diagonale gauche
-                        if (grille[i+3][j-3].getSymbole().equals(symbolJoueur) && grille[i+2][j-2].getSymbole().equals(symbolJoueur) && grille[i+1][j-1].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((i+3<ligne) && (j+3<colonne)){ // dans le cas [vide][symbol][symbol][symbol] diagonale gauche
-                        if (grille[i+1][j+1].getSymbole().equals(symbolJoueur) && grille[i+2][j+2].getSymbole().equals(symbolJoueur) && grille[i+3][j+3].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((i-1>=0) && (i+2<ligne) && (j-1>=0) && (j+2)<colonne){ // dans le cas [symbol][vide][symbol][symbol] diagonale gauche
-                        if (grille[i-1][j-1].getSymbole().equals(symbolJoueur) && grille[i+1][j+1].getSymbole().equals(symbolJoueur) && grille[i+2][j+2].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    if((i-2>=0) && (i+1<ligne) && (j-2>=0) && (j+1<colonne)){ // dans le cas [symbol][symbol][vide][symbol] diagonale gauche
-                        if (grille[i-2][j-2].getSymbole().equals(symbolJoueur) && grille[i-1][j-1].getSymbole().equals(symbolJoueur) && grille[i+1][j+1].getSymbole().equals(symbolJoueur)){
-                            eval+=1000;
-                        }
-                    }
-                    // dans le cas [symbol][symbol][vide] diagonale gauche
-                    if((i-2>=0) && (j-2>=0)){
-                        if (grille[i-2][j-2].getSymbole().equals(symbolJoueur) && grille[i-1][j-1].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [vide][symbol][symbol] diagonale gauche
-                    if((i+2<ligne) && (j+2<colonne)){
-                        if (grille[i+1][j+1].getSymbole().equals(symbolJoueur) && grille[i+2][j+2].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide][symbol] diagonale gauche
-                    if(i-1>=0 && i+1<ligne && j-1>=0 && j+1<colonne){
-                        if (grille[i-1][j-1].getSymbole().equals(symbolJoueur) && grille[i+1][j+1].getSymbole().equals(symbolJoueur)) {
-                            eval += 200;
-                        }
-                    }// dans le cas [symbol][vide] diagonale gauche
-                    if(i-1>=0&& j-1>=0){
-                        if (grille[i-1][j-1].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }// dans le cas [vide][symbol] diagonale gauche
-                    if(i+1<ligne && j+1<colonne){
-                        if (grille[i+1][j+1].getSymbole().equals(symbolJoueur)) {
-                            eval += 30;
-                        }
-                    }
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 1
+        for (int i = 0; i < 4; i++) {
+            if(ligne + i < 6){
+                if(grille[ligne+ i][col].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
                 }
+                if(grille[ligne+ i][col].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
             }
         }
-        return eval;
-    }*/
+        return nbPions;
+    }
+    public int EvaluationColonneCas2(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -1; i < 3; i++) {
+            if(ligne + i < 6 && ligne + i >= 0){
+                if(grille[ligne + i][col].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne + i][col].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationColonneCas3(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 3
+        for (int i = -2; i < 2; i++) {
+            if(ligne + i < 6 && ligne + i >= 0){
+                if(grille[ligne + i][col].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne + i][col].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationColonneCas4(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -3; i < 1; i++) {
+            if(ligne + i < 6 && ligne + i >= 0){
+                if(grille[ligne + i][col].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne + i][col].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+
+    public int EvaluationDiagonaleDroite(boolean typeJoueur, Case[][] grille, int ligne, int col){
+
+        int score = 0;
+        score += EvaluationCalculate(EvaluationDiagonaleDroiteCas1(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationDiagonaleDroiteCas2(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationDiagonaleDroiteCas3(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationDiagonaleDroiteCas4(typeJoueur, grille, ligne, col));
+        return score;
+
+    }
+    public int EvaluationDiagonaleDroiteCas1(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 1
+        for (int i = 0; i < 4; i++) {
+            if(ligne - i < 6 && col + i < 7 && ligne - i >= 0 && col +i >= 0){
+                if(grille[ligne - i][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne - i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationDiagonaleDroiteCas2(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -1; i < 3; i++) {
+            if(ligne - i < 6 && col + i < 7 && ligne - i >= 0 && col +i >= 0){
+                if(grille[ligne - i][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne - i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationDiagonaleDroiteCas3(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 3
+        for (int i = -2; i < 2; i++) {
+            if(ligne - i < 6 && col + i < 7 && ligne - i >= 0 && col +i >= 0){
+                if(grille[ligne - i][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne - i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationDiagonaleDroiteCas4(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -3; i < 1; i++) {
+            if(ligne - i < 6 && col + i < 7 && ligne - i >= 0 && col +i >= 0){
+                if(grille[ligne - i][col + i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne - i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+
+    public int EvaluationDiagonaleGauche(boolean typeJoueur, Case[][] grille, int ligne, int col){
+
+        int score = 0;
+        score += EvaluationCalculate(EvaluationDiagonaleGaucheCas1(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationDiagonaleGaucheCas2(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationDiagonaleGaucheCas3(typeJoueur, grille, ligne, col));
+        score += EvaluationCalculate(EvaluationDiagonaleGaucheCas4(typeJoueur, grille, ligne, col));
+        return score;
+
+    }
+    public int EvaluationDiagonaleGaucheCas1(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 1
+        for (int i = 0; i < 4; i++) {
+            if(ligne + i < 6 && col + i < 7 && ligne + i >= 0 && col +i >= 0){
+                if(grille[ligne + i][col+i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne+ i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationDiagonaleGaucheCas2(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -1; i < 3; i++) {
+            if(ligne + i < 6 && col + i < 7 && ligne + i >= 0 && col +i >= 0){
+                if(grille[ligne+ i][col+i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne+ i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationDiagonaleGaucheCas3(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 3
+        for (int i = -2; i < 2; i++) {
+            if(ligne + i < 6 && col + i < 7 && ligne + i >= 0 && col +i >= 0){
+                if(grille[ligne+ i][col+i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne+ i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+    public int EvaluationDiagonaleGaucheCas4(boolean typeJoueur, Case[][] grille, int ligne, int col) {
+        int nbPions = 0;
+        String symbolJoueur;
+        String sJsuivant;
+        if(typeJoueur){
+            symbolJoueur = "1";
+            sJsuivant = "2";
+        }else {
+            symbolJoueur = "2";
+            sJsuivant = "1";
+        }
+
+        //Cas position 2
+        for (int i = -3; i < 1; i++) {
+            if(ligne + i < 6 && col + i < 7 && ligne + i >= 0 && col +i >= 0){
+                if(grille[ligne+ i][col+i].getSymbole().equals(sJsuivant)){
+                    nbPions = 0;
+                    break;
+                }
+                if(grille[ligne+ i][col+i].getSymbole().equals(symbolJoueur)){
+                    nbPions++;
+                }
+            }else{
+                nbPions = 0;
+            }
+        }
+        return nbPions;
+    }
+
 
     public int EvaluationLigneFull(int i, int j, int player, Case[][] grille){
         int nbaligner = 0;
@@ -381,19 +642,7 @@ public class Heuristic {
         return nbaligner;
     }
 
-    public int EvaluationCalculate(int nbPion){
 
-        if(nbPion == 1){
-            return 10;
-        }else if(nbPion == 2){
-            return 100;
-        }else if(nbPion == 3){
-            return 1000;
-        }else if(nbPion >= 4){
-            return 10000;
-        }
-        return 0;
-    }
 
     public int EvaluationFull(boolean typeJoueur, Case[][] grille){
 
@@ -406,18 +655,37 @@ public class Heuristic {
 
         for (int i = 0; i < grille.length; i++) {
             for (int j = 0; j < grille[0].length; j++) {
-                somme += EvaluationCalculate(EvaluationColumnFull(i,j,joueur,grille));
-                somme += EvaluationCalculate(EvaluationLigneFull(i,j,joueur,grille));
-                somme += EvaluationCalculate(EvaluationDiagonaleDroiteFull(i,j,joueur,grille));
-                somme += EvaluationCalculate(EvaluationDiagonaleGaucheFull(i,j,joueur,grille));
+                if(methode == 1){
+                    somme += EvaluationCalculate(EvaluationColumnFull(i,j,joueur,grille));
+                    somme += EvaluationCalculate(EvaluationLigneFull(i,j,joueur,grille));
+                    somme += EvaluationCalculate(EvaluationDiagonaleDroiteFull(i,j,joueur,grille));
+                    somme += EvaluationCalculate(EvaluationDiagonaleGaucheFull(i,j,joueur,grille));
+                }else{
+                    somme += EvaluationLigne(typeJoueur, grille, i , j);
+                    somme += EvaluationColonne(typeJoueur, grille, i , j);
+                    somme += EvaluationDiagonaleDroite(typeJoueur, grille, i , j);
+                    somme += EvaluationDiagonaleGauche(typeJoueur, grille, i , j);
+                }
+
             }
         }
+        // Pour afficher le score de la grille selon le joueur
+        /*
+        if(typeJoueur)
+        {
+            System.out.print("J1 ");
+        }else{
+            System.out.print("IA ");
+        }
+
+        System.out.println(somme);
+        */
         return somme;
     }
 
     public int Evaluation(Case[][] grille){
 
-        return  EvaluationFull(true, grille) - EvaluationFull(false, grille);
+        return EvaluationFull(true, grille) - EvaluationFull(false, grille);
 
     }
 

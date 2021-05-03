@@ -16,6 +16,10 @@ public class Environment {
 
     }
 
+    /*
+    * Initialisation d'une grille de puissance 4 vide
+    *
+     */
     public void initialisationGrille(){
         grille = new Case[6][7];
         for (int i = 0; i < this.grille.length; i++) {
@@ -25,6 +29,10 @@ public class Environment {
         }
     }
 
+    /*
+     * Fonction pour permettre au joueur de placer un pion dans la grille
+     *
+     */
     public void placerPions(int joueur, int colonne){
         for (int i = this.grille.length-1; i >= 0; i--) {
             if(grille[i][colonne].getSymbole().equals(" ")){
@@ -37,8 +45,12 @@ public class Environment {
         }
     }
 
+    /*
+     * Retourne vrai si la colonne est remplit
+     * Sinon Faux
+     */
     public boolean checkColonneFull(int colonne){
-
+        // On regarde juste la premiere ligne s'il y'a un pion ou pas car dans le puissance 4, les pions sont soumis à la gravité.
         if(!grille[0][colonne].getSymbole().equals(" ")){
             System.out.println("Colonne Pleine!");
             return true;
@@ -47,6 +59,10 @@ public class Environment {
 
     }
 
+    /*
+     * Retourne vrai si la colonne choisi est en dehors de la grille
+     * Sinon Faux
+     */
     public boolean outOfBounds(int colonne){
         if(colonne < 0 || colonne > grille[0].length){
             if(colonne == 999){
@@ -66,6 +82,10 @@ public class Environment {
         return false;
     }
 
+    /*
+     * Retourne vrai si nous avons quatre pions alignés d'un même joueur  dans la grille
+     * Sinon Faux
+     */
     public boolean checkVictory(int player){
         for (int i = 0; i < grille.length; i++) {
             for (int j = 0; j < grille[i].length; j++) {
@@ -92,6 +112,10 @@ public class Environment {
         return false;
     }
 
+    /*
+     * Retourne vrai si nous avons quatre pions alignés d'un même joueur  sur la ligne de la case i,j
+     * Sinon Faux
+     */
     public boolean checkRow(int i, int j, int player){
         int nbaligner = 1;
         String numPlayer = String.valueOf(player);
@@ -121,6 +145,10 @@ public class Environment {
         return nbaligner >= 4;
     }
 
+    /*
+    * Retourne vrai si nous avons quatre pions alignés d'un même joueur sur la colonne de la case i,j
+    * Sinon Faux
+     */
     public boolean checkColumn(int i, int j, int player){
         int nbaligner = 1;
         String numPlayer = String.valueOf(player);
@@ -149,6 +177,10 @@ public class Environment {
         return nbaligner >= 4;
     }
 
+    /*
+     * Retourne vrai si nous avons quatre pions alignés d'un même joueur sur la diagonal gauche de la case i,j
+     * Sinon Faux
+     */
     public boolean checkDiagonaleGauche(int i, int j, int player){
         int nbaligner = 1;
         String numPlayer = String.valueOf(player);
@@ -185,6 +217,10 @@ public class Environment {
         return nbaligner >= 4;
     }
 
+    /*
+     * Retourne vrai si nous avons quatre pions alignés d'un même joueur sur la diagonal droite de la case i,j
+     * Sinon Faux
+     */
     public boolean checkDiagonaleDroite(int i, int j, int player){
         int nbaligner = 1;
         String numPlayer = String.valueOf(player);
@@ -221,6 +257,10 @@ public class Environment {
         return nbaligner >= 4;
     }
 
+    /*
+     * Retourne vrai si la grille est pleine
+     * Sinon Faux
+     */
     public boolean checkFull(){
         for (int j = 0; j < grille[0].length; j++) {
             if(grille[0][j].getSymbole().equals(" ")){
@@ -246,6 +286,11 @@ public class Environment {
         this.agent = agent;
     }
 
+
+    /*
+    * Affichage de la grille
+    *
+     */
     @Override
     public String toString() {
         System.out.println("L'environnement");

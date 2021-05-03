@@ -10,6 +10,7 @@ public class Agent {
     private Effecteur effecteur;
     private Case[][] beliefs;
 
+    // Profondeur de l'arbre de recherche
     private int profondeur;
 
     public Agent(int profondeur){
@@ -19,10 +20,12 @@ public class Agent {
         this.profondeur = profondeur;
     }
 
+    // Observation de la grille
     public void observerGrille(Environment env){
         beliefs = capteur.observerGrille(env, beliefs);
     }
 
+    // Choix de la prochaine action de l'agent
     public void chooseAction(Environment env){
 
         //Mise a jour des croyances
@@ -31,15 +34,20 @@ public class Agent {
         //Choix du prochain coup
         Noeud n = new Noeud(true, beliefs);
         AlphaBeta ab = new AlphaBeta();
+        // Alpha = +Infini et Beta = -Infini
         Coup c = ab.AlphaBeta(n, Integer.MIN_VALUE, Integer.MAX_VALUE, this.profondeur);
-        //Execution du coup de l'IA
+
+        // Affichage du score de la colonne choisi
         System.out.println(c.getEval());
+        //Execution du coup de l'IA
         effecteur.doIt(c.getColonne(), env);
 
     }
 
 
-
+    /*
+    * Affichage des croyances de l'agent
+     */
     @Override
     public String toString() {
         System.out.println("Croyance de l'agent");
